@@ -7,6 +7,7 @@ import Dashboard from "./components/pages/Dashboard";
 import Signup from "./components/pages/Signup";
 import Confirmation from "./components/pages/Confirmation";
 import ForgotPassword from "./components/pages/ForgotPassword";
+import ResetPassword from "./components/pages/ResetPassword";
 import UserRoute from "./components/routes/UserRoute";
 import GuestRoute from "./components/routes/GuestRoute";
 
@@ -26,6 +27,12 @@ const App = ({ location }) => (
       path="/forgot_password"
       exact
       component={ForgotPassword}
+    />
+    <GuestRoute
+      location={location}
+      path="/reset_password"
+      exact
+      component={ResetPassword}
     />
     <UserRoute
       location={location}
