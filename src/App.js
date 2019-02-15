@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { Route } from "react-router-dom";
 import Homepage from "./components/pages/Homepage";
 import Login from "./components/pages/Login";
@@ -10,9 +11,12 @@ import ForgotPassword from "./components/pages/ForgotPassword";
 import ResetPassword from "./components/pages/ResetPassword";
 import UserRoute from "./components/routes/UserRoute";
 import GuestRoute from "./components/routes/GuestRoute";
+import TopNavigation from "./components/navigation/TopNavigation";
+import NewItem from "./components/pages/NewItem";
 
-const App = ({ location }) => (
+const App = ({ location, isAuthenticated }) => (
   <div className="ui container">
+    {isAuthenticated && <TopNavigation />}
     <Route location={location} path="/" exact component={Homepage} />
     <Route
       location={location}
@@ -40,13 +44,26 @@ const App = ({ location }) => (
       exact
       component={Dashboard}
     />
+    <UserRoute
+      location={location}
+      path="/books/new"
+      exact
+      component={NewItem}
+    />
   </div>
 );
 
 App.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  isAuthenticated: PropTypes.bool.isRequired
 };
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: !!state.user.email
+  };
+}
+
+export default connect(mapStateToProps)(App);

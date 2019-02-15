@@ -1,68 +1,37 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Authorization Template
 
-## Available Scripts
+This is a authorization template which contains:
 
-In the project directory, you can run:
+- Login form
+- Registration form
+- Confirmation
+- Password reset form
 
-### `npm start`
+It can be used in various project which require authorization process. It uses libraries like redux for state management, redux-thunk for creating asynchronous actions, prop-types for typechecking and many more.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Connection to your API
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Set your API URL adress in .env file and create your own backend logic based on this template or change it as you like.
 
-### `npm test`
+### Docker
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+At first, make sure you have installed latest stable version of `docker` and `docker-compose` packages in your system.
 
-### `npm run build`
+Most of the times that's the only commands you'll need:
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Running containers
+  ```bash
+  $ docker-compose up
+  ```
+- Stopping containers
+  ```bash
+  $ docker-compose stop
+  ```
+- Rebuilding containers
+  ```bash
+  $ docker-compose up --build
+  ```
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## React and Docker? Tiny problem
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+The goal is to achieve ability to run this React application as a Docker container that is built once. It is known that object `process` does not exist inside the browser environment, but it does exists in Node.js applications. By default, React does not do server-side rendering. It cannot inject environment variables (e.g. API_URL) during content serving. This means it can only be configured during build time. The solution is to pass the environment variables to the global `window` object (thanks to the bash script) so Docker can read them when the container is started. It is also possible to put them into a JavaScript file which can be served via Nginx (at the same time serving this React app).

@@ -1,0 +1,8 @@
+version: "3"
+services:
+  react-auth:
+    image: gitsobek/react-auth
+    ports:
+      - "5000:80"
+    environment:
+      - "API_URL=production.example.com"
